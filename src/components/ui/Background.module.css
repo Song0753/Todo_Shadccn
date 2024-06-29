@@ -1,0 +1,27 @@
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: -1;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Ensure it covers the background image completely */
+}
+
+.text {
+  position: relative;
+  z-index: 2; /* Ensure text appears above the overlay */
+  color: white; /* Adjust text color if necessary */
+}

@@ -1,0 +1,10 @@
+.clock {
+  font-size: 5rem;
+  color: #fff;
+  position: absolute;
+  top: 18.6%; /* 화면 상단으로부터 18.6% 위치 */
+  left: 50%; /* 부모 요소의 왼쪽에서 50% 위치 */
+  transform: translateX(-50%); /* 자신의 너비의 50%만큼 왼쪽으로 이동 */
+  width: 100%; /* 부모 요소의 전체 너비를 사용 */
+  text-align: center; /* 텍스트 중앙 정렬 */
+}

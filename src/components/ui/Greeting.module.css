@@ -1,0 +1,58 @@
+.page-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.greeting-container {
+  text-align: center;
+  position: absolute;
+  top: 59%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+.greeting-form h1 {
+  font-family: PretendardVariable;
+  font-size: 32px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  color: white;
+  margin-bottom: 20px;
+  margin: 16px 8px 7px;
+}
+.greeting-input {
+  color: white; /* 글씨 색깔을 흰색으로 설정 */
+  text-align: center; /* 텍스트를 가운데 정렬 */
+  padding: 10px;
+  font-size: 56px;
+  border: none;
+  border-bottom: 2px solid white;
+  border-radius: 0;
+  background-color: transparent;
+  min-width: 320px; /* 최소 너비를 320px로 설정 */
+  width: auto; /* 너비를 자동으로 조정하도록 설정 */
+}
+.greeting-input:focus {
+  outline: none;
+}
+.greeting-button {
+  display: block;
+  margin: 20px auto 0;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: transparent;
+  color: white;
+  border: none;
+}
+
+.greeting-button:hover {
+  background-color: #45a049;
+}
+
+.greeting-message {
+  font-size: 28px;
+  color: #333;
+}
