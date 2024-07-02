@@ -53,6 +53,7 @@
 }
 
 .greeting-message {
-  font-size: 28px;
-  color: #333;
+  font-size: 32px;
+  color: white;
+  font-family: PretendardVariable;
 }

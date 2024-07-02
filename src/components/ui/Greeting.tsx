@@ -4,6 +4,7 @@ import styles from "./Greeting.module.css"; // 스타일을 객체로 임포트
 import TodoList from "./TodoList"; // TodoList 컴포넌트를 임포트
 import Clock from "./Clock"; // Clock 컴포넌트를 임포트
 import { Button } from "@/components/ui/button";
+import CardWithForm from "./CreateCard"; // CardWithForm 컴포넌트를 임포트
 
 /**
  * Represents a component that displays a greeting message based on user input.
@@ -31,7 +32,7 @@ function Greeting() {
     localStorage.setItem("name", name);
     setStoredName(name);
   };
-
+  const [cardFormVisible, setCardFormVisible] = useState(false); // CardWithForm 컴포넌트의 표시 여부를 제어하는 상태
   // storedName 상태가 설정되지 않은 경우 폼을 렌더링하고, 설정된 경우 인사말과 TodoList를 렌더링
   return (
     <div className={styles["page-container"]}>
@@ -63,6 +64,22 @@ function Greeting() {
             <TodoList username={storedName} />
           </div>
         )}
+      </div>
+      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
+        <Button onClick={() => setCardFormVisible(true)}>Todo list open</Button>{" "}
+        {/* CardWithForm을 열기 위한 버튼 추가 */}
+        {cardFormVisible && (
+          <div className="relative">
+            <CardWithForm />
+            <button
+              className="absolute top-0 right-0"
+              onClick={() => setCardFormVisible(false)}
+            >
+              Close
+            </button>
+          </div>
+        )}{" "}
+        {/* 조건부 렌더링을 사용하여 CardWithForm 컴포넌트 표시 및 닫기 버튼 추가 */}
       </div>
     </div>
   );

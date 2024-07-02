@@ -1,0 +1,111 @@
+.todo-popup {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.todo-popup__content {
+  width: 720px;
+  height: 680px;
+  padding: 1.5rem;
+  border-radius: 24px;
+  background-color: #191919;
+}
+
+.todo-popup__title {
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.todo-popup__calendar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.todo-popup__calendar-button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.todo-popup__days {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.todo-popup__day-button {
+  width: 3rem;
+  height: 4rem;
+  border-radius: 0.25rem;
+  background-color: #4b5563;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.todo-popup__day-button--selected {
+  background-color: #3b82f6;
+}
+
+.todo-popup__day-name {
+  font-size: 0.75rem;
+}
+
+.todo-popup__day-date {
+  font-size: 1.125rem;
+}
+
+.todo-popup__list {
+  margin-bottom: 1rem;
+}
+
+.todo-popup__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  margin-bottom: 0.5rem;
+}
+
+.todo-popup__item-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.todo-popup__input {
+  flex-grow: 1;
+  margin-right: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: #4b5563;
+  color: white;
+}
+
+.todo-popup__add-button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.todo-popup__close-button {
+    position: absolute;
+    top: 1rem; /* 상단에서부터의 위치 조정 */
+    right: 1rem; /* 우측에서부터의 위치 조정 */
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.25rem; /* 버튼의 텍스트 크기 조정 */
+  }
