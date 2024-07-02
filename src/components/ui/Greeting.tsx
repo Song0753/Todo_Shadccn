@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Greeting.module.css";
 import TodoList from "./TodoList";
 import Clock from "./Clock";
@@ -15,6 +15,20 @@ function Greeting() {
   const [todoPopupVisible, setTodoPopupVisible] = useState(false);
   const [todos, setTodos] = useState([]);
 
+  useEffect(() => {
+    if (storedName) {
+      const storedTodos = JSON.parse(localStorage.getItem(`todos_${storedName}`)) || [];
+      setTodos(storedTodos);
+    }
+  }, [storedName]);
+
+  useEffect(() => {
+    if (storedName) {
+      localStorage.setItem(`todos_${storedName}`, JSON.stringify(todos));
+    }
+  }, [todos, storedName]);
+
+
   const handleInputChange = (e) => {
     setName(e.target.value);
     setInputWidth(Math.max(320, e.target.value.length * 40));
@@ -27,15 +41,28 @@ function Greeting() {
   };
 
   const handleAddTodo = (date, text) => {
-    setTodos([...todos, { id: Date.now(), date, text }]);
+    const newTodo = { id: Date.now(), date, text, complete: false };
+    setTodos(prevTodos => [...prevTodos, newTodo]);
   };
 
-  const handleEditTodo = (id) => {
-    // Todo 편집 로직 구현
+  const handleEditTodo = (id, newText) => {
+    setTodos(prevTodos =>
+      prevTodos.map(todo =>
+        todo.id === id ? { ...todo, text: newText } : todo
+      )
+    );
   };
 
   const handleDeleteTodo = (id) => {
-    setTodos(todos.filter(todo => todo.id !== id));
+    setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
+  };
+
+  const handleToggleTodo = (id) => {
+    setTodos(prevTodos =>
+      prevTodos.map(todo =>
+        todo.id === id ? { ...todo, complete: !todo.complete } : todo
+      )
+    );
   };
 
   return (
@@ -70,16 +97,15 @@ function Greeting() {
       </div>
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
         <Button onClick={() => setTodoPopupVisible(true)}>Todo list open</Button>
-        {todoPopupVisible && (
-          <TodoPopup
-            isVisible={todoPopupVisible}
-            onClose={() => setTodoPopupVisible(false)}
-            todos={todos}
-            onAddTodo={handleAddTodo}
-            onEditTodo={handleEditTodo}
-            onDeleteTodo={handleDeleteTodo}
-          />
-        )}
+        <TodoPopup
+          isVisible={todoPopupVisible}
+          onClose={() => setTodoPopupVisible(false)}
+          todos={todos}
+          onAddTodo={handleAddTodo}
+          onEditTodo={handleEditTodo}
+          onDeleteTodo={handleDeleteTodo}
+          onToggleTodo={handleToggleTodo}
+        />
       </div>
     </div>
   );

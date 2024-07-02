@@ -1,16 +1,17 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { format, startOfWeek, addDays } from "date-fns";
-import { ChevronLeft, ChevronRight, Edit, Trash } from "lucide-react";
+import { ChevronLeft, ChevronRight, Edit, Trash, X } from "lucide-react";
 import styles from "./TodoPopUp.module.css";
 
 const TodoPopup = ({
   isVisible,
   onClose,
-  todos = [],
+  todos,
   onAddTodo,
   onEditTodo,
   onDeleteTodo,
+  onToggleTodo
 }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [newTodo, setNewTodo] = useState("");
@@ -40,16 +41,24 @@ const TodoPopup = ({
     }
   };
 
+  if (!isVisible) return null;
+
   return (
     <div className={styles["todo-popup"]}>
       <div className={styles["todo-popup__content"]}>
-        <h2 className="text-white text-2xl mb-4">To-Do List</h2>
+        <button
+          onClick={onClose}
+          className={styles["todo-popup__close-button"]}
+        >
+          <X size={24} />
+        </button>
+        <h2 className={styles["todo-popup__title"]}>To-Do List</h2>
 
-        <div className="flex justify-between items-center mb-4">
-          <button onClick={handlePrevWeek}>
-            <ChevronLeft className="text-white" />
+        <div className={styles["todo-popup__calendar"]}>
+          <button onClick={handlePrevWeek} className={styles["todo-popup__calendar-button"]}>
+            <ChevronLeft />
           </button>
-          <div className="flex space-x-2">
+          <div className={styles["todo-popup__days"]}>
             {weekDays.map((day, index) => {
               const date = addDays(startDate, index);
               const isSelected =
@@ -58,23 +67,21 @@ const TodoPopup = ({
               return (
                 <button
                   key={day}
-                  className={`w-12 h-16 rounded ${
-                    isSelected ? "bg-blue-500" : "bg-gray-700"
-                  } text-white flex flex-col items-center justify-center`}
+                  className={`${styles["todo-popup__day-button"]} ${isSelected ? styles["todo-popup__day-button--selected"] : ""}`}
                   onClick={() => setSelectedDate(date)}
                 >
-                  <span className="text-xs">{day}</span>
-                  <span className="text-lg">{format(date, "d")}</span>
+                  <span className={styles["todo-popup__day-name"]}>{day}</span>
+                  <span className={styles["todo-popup__day-date"]}>{format(date, "d")}</span>
                 </button>
               );
             })}
           </div>
-          <button onClick={handleNextWeek}>
-            <ChevronRight className="text-white" />
+          <button onClick={handleNextWeek} className={styles["todo-popup__calendar-button"]}>
+            <ChevronRight />
           </button>
         </div>
 
-        <ul className="mb-4">
+        <ul className={styles["todo-popup__list"]}>
           {todos
             .filter(
               (todo) =>
@@ -84,11 +91,16 @@ const TodoPopup = ({
             .map((todo) => (
               <li
                 key={todo.id}
-                className="flex items-center justify-between text-white mb-2"
+                className={styles["todo-popup__item"]}
               >
-                <span>{todo.text}</span>
-                <div>
-                  <button onClick={() => onEditTodo(todo.id)} className="mr-2">
+                <input
+                  type="checkbox"
+                  checked={todo.complete}
+                  onChange={() => onToggleTodo(todo.id)}
+                />
+                <span style={{ textDecoration: todo.complete ? 'line-through' : 'none' }}>{todo.text}</span>
+                <div className={styles["todo-popup__item-actions"]}>
+                <button onClick={() => onEditTodo(todo.id, prompt("Edit todo:", todo.text))}>
                     <Edit size={16} />
                   </button>
                   <button onClick={() => onDeleteTodo(todo.id)}>
@@ -105,20 +117,13 @@ const TodoPopup = ({
             value={newTodo}
             onChange={(e) => setNewTodo(e.target.value)}
             placeholder="Add new task"
-            className="flex-grow mr-2 p-2 rounded bg-gray-700 text-white"
+            className={styles["todo-popup__input"]}
           />
           <button
             onClick={handleAddTodo}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
+            className={styles["todo-popup__add-button"]}
           >
             Add
-          </button>
-          {/* 닫기 버튼 추가 */}
-          <button
-            onClick={onClose}
-            className={styles["todo-popup__close-button"]}
-          >
-            Close
           </button>
         </div>
       </div>
