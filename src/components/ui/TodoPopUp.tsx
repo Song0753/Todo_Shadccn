@@ -118,7 +118,7 @@ const TodoPopup = ({
             onClick={onClose}
             className={styles["todo-popup__close-button"]}
           >
-            Close2
+            Close
           </button>
         </div>
       </div>

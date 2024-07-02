@@ -1,46 +1,49 @@
 "use client";
 import React, { useState } from "react";
-import styles from "./Greeting.module.css"; // 스타일을 객체로 임포트
-import TodoList from "./TodoList"; // TodoList 컴포넌트를 임포트
-import Clock from "./Clock"; // Clock 컴포넌트를 임포트
+import styles from "./Greeting.module.css";
+import TodoList from "./TodoList";
+import Clock from "./Clock";
 import { Button } from "@/components/ui/button";
-import CardWithForm from "./CreateCard"; // CardWithForm 컴포넌트를 임포트
+import TodoPopup from "./TodoPopUp";
 
-/**
- * Represents a component that displays a greeting message based on user input.
- *
- * @returns {JSX.Element} The rendered Greeting component.
- */
 function Greeting() {
-  // useState 훅을 사용하여 name 상태를 정의하고 초기값을 빈 문자열로 설정
   const [name, setName] = useState("");
-  // useState 훅을 사용하여 storedName 상태를 정의하고 초기값을 localStorage에 저장된 값 또는 빈 문자열로 설정
   const [storedName, setStoredName] = useState(
     localStorage.getItem("name") || ""
   );
-  const [inputWidth, setInputWidth] = useState(320); // 입력 필드의 너비를 관리하는 상태 추가
+  const [inputWidth, setInputWidth] = useState(320);
+  const [todoPopupVisible, setTodoPopupVisible] = useState(false);
+  const [todos, setTodos] = useState([]);
 
-  // input 요소의 값이 변경될 때마다 name 상태를 업데이트
   const handleInputChange = (e) => {
     setName(e.target.value);
-    setInputWidth(Math.max(320, e.target.value.length * 40)); // 입력 값의 길이에 따라 너비 업데이트
+    setInputWidth(Math.max(320, e.target.value.length * 40));
   };
 
-  // form 요소를 제출할 때 name 상태를 localStorage에 저장하고 storedName 상태를 업데이트
   const handleFormSubmit = (e) => {
     e.preventDefault();
     localStorage.setItem("name", name);
     setStoredName(name);
   };
-  const [cardFormVisible, setCardFormVisible] = useState(false); // CardWithForm 컴포넌트의 표시 여부를 제어하는 상태
-  // storedName 상태가 설정되지 않은 경우 폼을 렌더링하고, 설정된 경우 인사말과 TodoList를 렌더링
+
+  const handleAddTodo = (date, text) => {
+    setTodos([...todos, { id: Date.now(), date, text }]);
+  };
+
+  const handleEditTodo = (id) => {
+    // Todo 편집 로직 구현
+  };
+
+  const handleDeleteTodo = (id) => {
+    setTodos(todos.filter(todo => todo.id !== id));
+  };
+
   return (
     <div className={styles["page-container"]}>
       <div className={styles["clock-container"]}>
         <Clock />
       </div>
       <div className={styles["greeting-container"]}>
-        {/* Clock 컴포넌트 추가 */}
         {!storedName ? (
           <form onSubmit={handleFormSubmit} className={styles["greeting-form"]}>
             <h1>Nice to meet you!</h1>
@@ -66,20 +69,17 @@ function Greeting() {
         )}
       </div>
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <Button onClick={() => setCardFormVisible(true)}>Todo list open</Button>{" "}
-        {/* CardWithForm을 열기 위한 버튼 추가 */}
-        {cardFormVisible && (
-          <div className="relative">
-            <CardWithForm />
-            <button
-              className="absolute top-0 right-0"
-              onClick={() => setCardFormVisible(false)}
-            >
-              Close
-            </button>
-          </div>
-        )}{" "}
-        {/* 조건부 렌더링을 사용하여 CardWithForm 컴포넌트 표시 및 닫기 버튼 추가 */}
+        <Button onClick={() => setTodoPopupVisible(true)}>Todo list open</Button>
+        {todoPopupVisible && (
+          <TodoPopup
+            isVisible={todoPopupVisible}
+            onClose={() => setTodoPopupVisible(false)}
+            todos={todos}
+            onAddTodo={handleAddTodo}
+            onEditTodo={handleEditTodo}
+            onDeleteTodo={handleDeleteTodo}
+          />
+        )}
       </div>
     </div>
   );

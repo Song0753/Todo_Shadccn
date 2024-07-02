@@ -5,10 +5,10 @@ import TodoPopup from "./TodoPopUp"; // TodoPopup 컴포넌트를 import
 export function CardWithForm() {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [todos, setTodos] = useState([]);
-  // 컴포넌트가 마운트될 때 TodoPopup을 표시하기 위해 isPopupVisible을 true로 설정
-  useEffect(() => {
-    setPopupVisible(true);
-  }, []);
+  // // 컴포넌트가 마운트될 때 TodoPopup을 표시하기 위해 isPopupVisible을 true로 설정
+  // useEffect(() => {
+  //   setPopupVisible(true);
+  // }, []);
 
   const handleAddTodo = (date, text) => {
     setTodos([...todos, { id: Date.now(), date, text }]);
@@ -22,14 +22,18 @@ export function CardWithForm() {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
   return (
-    <TodoPopup
-      isVisible={isPopupVisible}
-      onClose={() => setPopupVisible(false)}
-      todos={todos}
-      onAddTodo={handleAddTodo}
-      onEditTodo={handleEditTodo}
-      onDeleteTodo={handleDeleteTodo}
-    />
+    <>
+      {isPopupVisible && (
+        <TodoPopup
+          isVisible={isPopupVisible}
+          onClose={() => setPopupVisible(false)}
+          todos={todos}
+          onAddTodo={handleAddTodo}
+          onEditTodo={handleEditTodo}
+          onDeleteTodo={handleDeleteTodo}
+        />
+      )}
+    </>
   );
 }
 
