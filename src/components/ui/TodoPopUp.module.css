@@ -1,13 +1,15 @@
 .todo-popup {
-  position: absolute;
+  position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 1000;
 }
 
 .todo-popup__content {
+  position: relative;
   width: 720px;
   height: 680px;
   padding: 1.5rem;
@@ -100,12 +102,17 @@
 }
 
 .todo-popup__close-button {
-    position: absolute;
-  top: 1rem; /* 상단에서부터의 위치를 팝업 바깥으로 조정 */
-  right: 1rem; /* 우측에서부터의 위치를 팝업 바깥으로 조정 */
-    color: white;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.25rem; /* 버튼의 텍스트 크기 조정 */
-  }
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+}
