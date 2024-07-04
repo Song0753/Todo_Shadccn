@@ -41,6 +41,12 @@ const TodoPopup = ({
     }
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleAddTodo();
+    }
+  };
+
   if (!isVisible) return null;
 
   return (
@@ -93,12 +99,20 @@ const TodoPopup = ({
                 key={todo.id}
                 className={styles["todo-popup__item"]}
               >
-                <input
-                  type="checkbox"
-                  checked={todo.complete}
-                  onChange={() => onToggleTodo(todo.id)}
-                />
-                <span style={{ textDecoration: todo.complete ? 'line-through' : 'none' }}>{todo.text}</span>
+                        <div className={styles["todo-popup__item-content"]}>
+                  <input
+                    type="checkbox"
+                    checked={todo.complete}
+                    onChange={() => onToggleTodo(todo.id)}
+                    className={styles["todo-popup__checkbox"]}
+                  />
+                  <span 
+                    className={styles["todo-popup__item-text"]}
+                    style={{ textDecoration: todo.complete ? 'line-through' : 'none' }}
+                  >
+                    {todo.text}
+                  </span>
+                </div>
                 <div className={styles["todo-popup__item-actions"]}>
                 <button onClick={() => onEditTodo(todo.id, prompt("Edit todo:", todo.text))}>
                     <Edit size={16} />
@@ -111,11 +125,12 @@ const TodoPopup = ({
             ))}
         </ul>
 
-        <div className="flex">
+        <div className={styles["todo-popup__input-container"]}>
           <input
             type="text"
             value={newTodo}
             onChange={(e) => setNewTodo(e.target.value)}
+            onKeyPress={handleKeyPress}
             placeholder="Add new task"
             className={styles["todo-popup__input"]}
           />
