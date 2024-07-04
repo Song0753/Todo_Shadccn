@@ -83,6 +83,9 @@
   overflow-y: auto;
   margin-bottom: 1rem;
   font-family: Pretendard;
+  font-size: 18px;
+  padding-left: 0;
+  list-style-type: none;
 }
 
 .todo-popup__item {
@@ -92,6 +95,11 @@
   color: white;
   margin-bottom: 0.5rem;
   text-align: left;
+}
+
+.todo-popup__item-content {
+  display: flex;
+  align-items: center; /* 수직 중앙 정렬을 위해 추가 */
 }
 
 .todo-popup__item-actions {
@@ -142,3 +150,39 @@
   border-radius: 50%;
 }
 
+.todo-popup__checkbox {
+  margin-right: 1rem;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  /* 체크박스의 기본 외형을 제거하고 커스텀 스타일 적용 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 2px solid white;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.todo-popup__checkbox:checked {
+  background-color: white;
+  position: relative;
+}
+
+.todo-popup__checkbox:checked::after {
+  content: "\2714"; /* 체크 표시 유니코드 */
+  font-size: 16px;
+  color: #191919;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.todo-popup__item-text {
+  line-height: 24px; /* 체크박스 높이와 동일하게 설정 */
+  display: flex;
+  align-items: center;
+}
